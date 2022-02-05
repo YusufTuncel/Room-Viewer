@@ -1,0 +1,122 @@
+<html>
+	<head>
+		<title>Room Planner</title>
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	
+	
+	
+	<body onload="onload();draw_all();">
+	
+		<!--Top bar-->
+		<div id="controls">
+			<h1 class="big_text" style="display: inline;float: left;margin: 0px;padding: 20px 0px 0px 0px;">Room Planner</h1>
+			<span class = "vertical-center">
+				<verticalLine>
+					<input id="proj_name" size="10" type="text" value="Room Name" class="text" style="float:none;" onkeydown="saved = false;document.title = 'Room Planner *'">
+				</verticalLine>
+				
+				<verticalLine>
+					<button class="text" onclick="location.reload();" id="new" disabled>New</button>
+				</verticalLine>
+				
+				<verticalLine>
+					<button class="text" onclick="create_square()" id="create" disabled>Create</button>
+					<button class="text" onclick="delete_square()" id="delete" disabled>Delete</button>
+				</verticalLine>
+				
+				<verticalLine>
+					<button class="text" onclick="save()" id="save" disabled>Save</button>
+					<button class="text" onclick="load()">Open</button>
+					<button class="text" onclick="upload.click()">Upload</input>
+					<button class="text" onclick="down_load()" id="download" disabled>Download</button>
+				</verticalLine>
+			</span>
+		</div>
+		
+		<!--Canvas-->
+		<div id="canvas_div">
+			<canvas id="canvas" width="0" height="0"></canvas>
+		</div>
+		
+		
+		<!--Left bar-->
+		<div id="inspector">
+			<center>
+				<h1 class="big_text">Inspector</h1>
+			</center>
+			<label class="text">Name </label><input id="name" size="9" type="text" value="" class="text">
+			<label class="text">X </label><input id="x" size="5" type="text" value="" class="text"><cm class="small_text"> cm</cm>
+			<label class="text">Y </label><input id="y" size="5" type="text" value="" class="text"><cm class="small_text"> cm</cm>
+			<label class="text">Width </label><input id="w" size="5" type="text" value="" class="text"><cm class="small_text"> cm</cm>
+			<label class="text">Height </label><input id="h" size="5" type="text" value="" class="text"><cm class="small_text"> cm</cm>
+			<label class="text">Rotation </label><input id="r" size="5" type="text" value="" class="text"><cm class="small_text">&deg;</cm>
+			
+			<center style="margin: 350px 0px 0px 0px;">
+				<button id = "set_properties" class="text" onclick="setProperties()" disabled>Set Properties</button>
+			</center>
+		</div>
+		
+		<!--Create new square popup-->
+		<div id="create_square" class="popup" style="padding:0px 0px 0px 30px;">
+			<center>
+				<h1 class="big_text" style="padding: 10px 10px;margin: 0px;">New Square</h1>
+			</center>
+			<label class="text">Name </label><input id="new_name" maxlength="9" size="9" type="text" class="text">
+			<label class="text">X </label><input id="new_x" maxlength="5" size="5" type="text" class="text"><cm class="small_text"> cm</cm>
+			<label class="text">Y </label><input id="new_y" maxlength="5" size="5" type="text" class="text"><cm class="small_text"> cm</cm>
+			<label class="text">Width </label><input id="new_w" maxlength="5" size="5" type="text" class="text"><cm class="small_text"> cm</cm>
+			<label class="text">Height </label><input id="new_h" maxlength="5" size="5" type="text" class="text"><cm class="small_text"> cm</cm>
+			<label class="text">Rotation </label><input id="new_r" maxlength="5" size="5" type="text" class="text"><cm class="small_text">&deg;</cm>
+			
+			<center style="margin: 300px 0px 0px 0px;">
+				<button class="text" onclick="create_new()">Create</button>
+			</center>
+			<center style="margin: 20px 0px 0px 0px;">
+				<button class="text" onclick='create_popup.style.display = "none";'>Cancel</button>
+			</center>
+		</div>
+		
+		
+		<!--Room size popup-->
+		<div id="new_room" class="popup" style="padding:0px 0px 0px 30px;">
+			<center>
+				<h1 class="big_text" style="padding: 10px 10px;margin: 0px;">Room Size</h1>
+			</center>
+			
+			<label class="text">Width </label><input id="room_w" maxlength="5" size="5" type="number" min="1" max="10000" step="1" value="500" class="text"><cm class="small_text"> cm</cm>
+			<label class="text">Height </label><input id="room_h" maxlength="5" size="5" type="number" min="1" max="10000" step="1" value="500" class="text"><cm class="small_text"> cm</cm>
+			
+			<center style="margin: 300px 0px 0px 0px;">
+				<button class="text" onclick="create_new_room()">Create</button>
+			</center>
+		</div>
+		
+		<!--Room size popup-->
+		<div id="open_room" class="popup" style="padding:0px 0px 0px 30px;">
+			<center>
+				<h1 class="big_text" style="padding: 10px 10px;margin: 0px;">Open Room</h1>
+			</center>
+			<select name="Files" id="files" size="5" class="text">  
+			
+			</select>
+			<center style="margin: 15px 0px 0px 0px;">
+				<button class="text" onclick="load_room()">Load</button>
+			</center>
+			<center style="margin: 15px 0px 0px 0px;">
+				<button class="text" onclick="document.getElementById('open_room').style.display='none';">Cancel</button>
+			</center>
+			<center style="margin: 15px 0px 0px 0px;">
+				<button class="text" onclick="delete_room()">Delete</button>
+			</center>
+		</div>
+		
+		<input class="text" type="file" id = "upload"></input>
+	</body>
+	
+	<script src = "./js/dim.js"></script>
+	<script src = "./js/files.js"></script>
+	<script src = "./js/UI.js"></script>
+	<script src = "./js/events.js"></script>
+	<script src = "./js/main.js"></script>
+</html>
