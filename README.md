@@ -1,2 +1,2 @@
-# Room-Viewer
-Simple room planner in JS &amp; HTML
+# Room-Planner 
+Sistem analizi için basit oda tasarımlayıcısı html ve css kullanarak
